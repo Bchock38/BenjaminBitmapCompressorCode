@@ -34,25 +34,25 @@ public class BitmapCompressor {
     public static void compress() {
 
         // TODO: complete compress()
-    String s = BinaryStdIn.readString();
-    int n = s.length();
-    int numberZero = 0;
-    int numberOne = 0;
+        String s = BinaryStdIn.readString();
+        int n = s.length();
+        int numberZero = 0;
+        int numberOne = 0;
 
-    for (int i =0; i < n; i++){
-        if (s.charAt(i) == 0){
-            numberZero++;
-            BinaryStdOut.write(numberOne);
-            BinaryStdOut.write(1);
-            numberOne = 0;
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == 0) {
+                numberZero++;
+                BinaryStdOut.write(numberOne);
+                BinaryStdOut.write(1);
+                numberOne = 0;
+            } else {
+                BinaryStdOut.write(numberZero);
+                BinaryStdOut.write(0);
+                numberOne++;
+                numberZero = 0;
+            }
+            BinaryStdOut.close();
         }
-        else{
-            BinaryStdOut.write(numberZero);
-            BinaryStdOut.write(0);
-            numberOne++;
-            numberZero =0;
-        }
-        BinaryStdOut.close();
     }
 
     /**
