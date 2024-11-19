@@ -42,12 +42,14 @@ public class BitmapCompressor {
         for (int i = 0; i < n; i++) {
             if (s.charAt(i) == 0) {
                 numberZero++;
-                BinaryStdOut.write(numberOne);
                 BinaryStdOut.write(1);
+                BinaryStdOut.write(numberOne);
+
                 numberOne = 0;
             } else {
-                BinaryStdOut.write(numberZero);
                 BinaryStdOut.write(0);
+                BinaryStdOut.write(numberZero);
+
                 numberOne++;
                 numberZero = 0;
             }
@@ -62,7 +64,27 @@ public class BitmapCompressor {
     public static void expand() {
 
         // TODO: complete expand()
+        int numZeros = 0;
+        int numOnes = 0;
+        int curNum = 0;
+        String s = BinaryStdIn.readString();
 
+        while (s.length() > 0){
+            curNum = s.charAt(0);
+            if (curNum == 1){
+                numOnes = s.charAt(1);
+                for (int i = 0; i < numOnes; i++){
+                    BinaryStdOut.write(1);
+                }
+            }
+            else{
+                numZeros = s.charAt(1);
+                for (int i = 0; i < numZeros; i++){
+                    BinaryStdOut.write(0);
+                }
+            }
+
+        }
         BinaryStdOut.close();
     }
 
