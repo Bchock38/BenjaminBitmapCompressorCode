@@ -16,6 +16,8 @@
  *  1240 bits
  ******************************************************************************/
 
+import java.util.ArrayList;
+
 /**
  *  The {@code BitmapCompressor} class provides static methods for compressing
  *  and expanding a binary bitmap input.
@@ -38,23 +40,40 @@ public class BitmapCompressor {
         int n = s.length();
         int numberZero = 0;
         int numberOne = 0;
+        ArrayList<Integer> holder = new ArrayList<Integer>();
 
         for (int i = 0; i < n; i++) {
             if (s.charAt(i) == 0) {
                 numberZero++;
-                BinaryStdOut.write(1);
-                BinaryStdOut.write(numberOne);
+                if (numberOne != 0){
+                    holder.add(-1);
+                    holder.add(numberOne);
+                    numberOne = 0;
+                }
 
-                numberOne = 0;
             } else {
-                BinaryStdOut.write(0);
-                BinaryStdOut.write(numberZero);
-
                 numberOne++;
-                numberZero = 0;
+                if (numberZero != 0){
+                    holder.add(-2);
+                    holder.add(numberZero);
+                    numberZero = 0;
+                }
             }
-            BinaryStdOut.close();
         }
+        BinaryStdOut.write(holder.size());
+        for (int i = 0; i < holder.size(); i++){
+            if (holder.get(i) == -1){
+                BinaryStdOut.write(holder.get(i), 1);
+            }
+            else if ( holder.get(i) == -2){
+
+            }
+            else{
+                BinaryStdOut.write(holder.get(i));
+            }
+
+        }
+        BinaryStdOut.close();
     }
 
     /**
@@ -67,20 +86,19 @@ public class BitmapCompressor {
         int numZeros = 0;
         int numOnes = 0;
         int curNum = 0;
-        String s = BinaryStdIn.readString();
-
-        while (s.length() > 0){
-            curNum = s.charAt(0);
+        int size = BinaryStdIn.readInt();
+        for (int i = 0; i < size; i++){
+            curNum = BinaryStdIn.readInt(1);
             if (curNum == 1){
-                numOnes = s.charAt(1);
-                for (int i = 0; i < numOnes; i++){
-                    BinaryStdOut.write(1);
+                numOnes = BinaryStdIn.readInt();
+                for (int j = 0; j < numOnes; j++){
+                    BinaryStdOut.write(1,1);
                 }
             }
             else{
-                numZeros = s.charAt(1);
-                for (int i = 0; i < numZeros; i++){
-                    BinaryStdOut.write(0);
+                numZeros = BinaryStdIn.readInt();
+                for (int j = 0; j < numZeros; j++){
+                    BinaryStdOut.write(0,1);
                 }
             }
 
