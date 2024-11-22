@@ -36,44 +36,42 @@ public class BitmapCompressor {
     public static void compress() {
 
         // TODO: complete compress()
-        String s = BinaryStdIn.readString();
-        int n = s.length();
         int numberZero = 0;
         int numberOne = 0;
+        int bit;
         ArrayList<Integer> holder = new ArrayList<Integer>();
-
-        for (int i = 0; i < n; i++) {
-            if (s.charAt(i) == 0) {
+        bit = BinaryStdIn.readInt(1);
+        if (bit != 0){
+            holder.add(0);
+        }
+        while (!BinaryStdIn.isEmpty()) {
+            if (bit == 0) {
                 numberZero++;
-                if (numberOne != 0){
-                    holder.add(-1);
+                if (numberOne != 0) {
                     holder.add(numberOne);
                     numberOne = 0;
                 }
-
-            } else {
+            }
+            else {
                 numberOne++;
-                if (numberZero != 0){
-                    holder.add(-2);
+                if (numberZero != 0) {
                     holder.add(numberZero);
                     numberZero = 0;
                 }
             }
-        }
-        BinaryStdOut.write(holder.size());
-        for (int i = 0; i < holder.size(); i++){
-            if (holder.get(i) == -1){
-                BinaryStdOut.write(holder.get(i), 1);
+            bit = BinaryStdIn.readInt(1);
             }
-            else if ( holder.get(i) == -2){
+            BinaryStdOut.write(holder.size());
+            for (int i = 0; i < holder.size(); i++) {
+                while (holder.get(i) > 255) {
+                    BinaryStdOut.write(255, 8);
+                    BinaryStdOut.write(0, 1);
+                    holder.set(i, holder.get(i)-255);
+                }
+                BinaryStdOut.write(holder.get(i), 8);
+            }
+            BinaryStdOut.close();
 
-            }
-            else{
-                BinaryStdOut.write(holder.get(i));
-            }
-
-        }
-        BinaryStdOut.close();
     }
 
     /**
@@ -83,23 +81,24 @@ public class BitmapCompressor {
     public static void expand() {
 
         // TODO: complete expand()
-        int numZeros = 0;
+        int numDidgets = 0;
         int numOnes = 0;
         int curNum = 0;
         int size = BinaryStdIn.readInt();
         for (int i = 0; i < size; i++){
-            curNum = BinaryStdIn.readInt(1);
-            if (curNum == 1){
-                numOnes = BinaryStdIn.readInt();
-                for (int j = 0; j < numOnes; j++){
-                    BinaryStdOut.write(1,1);
+            numDidgets = BinaryStdIn.readInt();
+            if (numDidgets == 0){
+
+            }
+            else if (i%2 == 0){
+                for (int j = 0; j < numDidgets; j++){
+                    BinaryStdOut.write(0,1);
                 }
             }
             else{
-                numZeros = BinaryStdIn.readInt();
-                for (int j = 0; j < numZeros; j++){
-                    BinaryStdOut.write(0,1);
-                }
+                 for (int j = 0; j < numDidgets; j++){
+                     BinaryStdOut.write(1,1);
+                 }
             }
 
         }
