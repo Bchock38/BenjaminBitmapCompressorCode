@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *  @author Robert Sedgewick
  *  @author Kevin Wayne
  *  @author Zach Blick
- *  @author YOUR NAME HERE
+ *  @author Benjamin Chock
  */
 public class BitmapCompressor {
 
@@ -41,10 +41,13 @@ public class BitmapCompressor {
         int bit;
         ArrayList<Integer> holder = new ArrayList<Integer>();
         bit = BinaryStdIn.readInt(1);
+        //if first number isn't zero record it as no numbers
         if (bit != 0){
             holder.add(0);
         }
+        //while their are numbers to be read in read them
         while (!BinaryStdIn.isEmpty()) {
+            //if number is zero increase count of zeros in a row and end count of ones in a row
             if (bit == 0) {
                 numberZero++;
                 if (numberOne != 0) {
@@ -52,6 +55,7 @@ public class BitmapCompressor {
                     numberOne = 0;
                 }
             }
+            //else increase number of ones and end count of zeros
             else {
                 numberOne++;
                 if (numberZero != 0) {
@@ -61,7 +65,9 @@ public class BitmapCompressor {
             }
             bit = BinaryStdIn.readInt(1);
             }
+        //write out leangth of all saved ints to avoid reading in the placer filler zeros
             BinaryStdOut.write(holder.size());
+        //read in all the numbers as 8 bit and if the number is greater than 8 bits read it in as seperate 8 bit numbers
             for (int i = 0; i < holder.size(); i++) {
                 while (holder.get(i) > 255) {
                     BinaryStdOut.write(255, 8);
@@ -80,13 +86,13 @@ public class BitmapCompressor {
      */
     public static void expand() {
 
+
         // TODO: complete expand()
         int numDidgets = 0;
-        int numOnes = 0;
-        int curNum = 0;
         int size = BinaryStdIn.readInt();
+        //for all the numbers print the number os zeros/ones they correspond two the order goes 0 the 1
         for (int i = 0; i < size; i++){
-            numDidgets = BinaryStdIn.readInt();
+            numDidgets = BinaryStdIn.readInt(8);
             if (numDidgets == 0){
 
             }
